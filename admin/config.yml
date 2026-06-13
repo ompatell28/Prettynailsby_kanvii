@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main # Aapki GitHub repository ki branch
+
+local_backend: true # Development ke time system par test karne ke liye
+
+media_folder: "images/gallery" # Images kis folder me save hongi
+public_folder: "/images/gallery"
+
+collections:
+  - name: "portfolio"
+    label: "Nail Art Portfolio"
+    folder: "data/portfolio" # Har naye design ka data yahan save hoga
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Design Title", name: "title", widget: "string" }
+      - { label: "Upload Image", name: "image", widget: "image" }
+      - { 
+          label: "Category", 
+          name: "category", 
+          widget: "select", 
+          options: ["bridal", "acrylic", "gel", "minimalist"] 
+        }

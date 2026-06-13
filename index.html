@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prettynailsby_kanvii| Premium Nail Art</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar-header">
+        <nav class="navbar">
+            <div class="logo-area">
+                <img src="logo.jpg" alt="Nail Studio Logo" class="nav-logo">
+                <div class="logo-text">
+                    <span class="cursive-title">Pretty nails studio</span>
+                    <span class="sub-title">BY KANVI</span>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="mobileMenu" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Gallery</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="mobile-only-action">
+                    <a href="#booking" class="nav-btn">Book Appointment</a>
+                </li>
+            </ul>
+            
+            <a href="#booking" class="nav-btn desktop-only-btn">Book Now</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Nails That <br><span>Define You</span></h1>
+            <p>Premium Nail Art, Custom Extensions & Luxury Care tailored beautifully by Kanvi.</p>
+            <div class="hero-cta-group">
+                <a href="#booking" class="cta-btn">Book Appointment</a>
+                <a href="#portfolio" class="cta-btn secondary-cta">View Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <div class="section-title">
+            <h2>Our Menu & Prices</h2>
+            <p>Elegant treatments for your beautiful hands</p>
+        </div>
+        <div class="services-grid" id="servicesContainer">
+            <div class="service-card">
+                <div class="card-icon"><i class="fas fa-sparkles"></i></div>
+                <h3>Gel Extensions</h3>
+                <span class="price">₹1,499</span>
+                <p class="duration"><i class="far fa-clock"></i> 60 Mins</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon"><i class="fas fa-gem"></i></div>
+                <h3>Bridal Nail Art</h3>
+                <span class="price">₹2,499</span>
+                <p class="duration"><i class="far fa-clock"></i> 90 Mins</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon"><i class="fas fa-magic"></i></div>
+                <h3>Acrylic Overlay</h3>
+                <span class="price">₹1,199</span>
+                <p class="duration"><i class="far fa-clock"></i> 45 Mins</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon"><i class="fas fa-magic"></i></div>
+                <h3>Acrylic Overlay</h3>
+                <span class="price">₹1,199</span>
+                <p class="duration"><i class="far fa-clock"></i> 45 Mins</p>
+            </div>
+        </div>
+    </section>
+
+   <section id="portfolio" class="portfolio-section">
+        <div class="section-title">
+            <h2>Our Masterpieces</h2>
+            <p>Glance at some of our recent trendy nail creations</p>
+        </div>
+
+        <div class="gallery-grid" id="homeGalleryGrid">
+            <div class="gallery-item" data-category="bridal">
+                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" alt="Bridal Design">
+                <h3>Classic Bridal Elegance</h3>
+            </div>
+            <div class="gallery-item" data-category="gel">
+                <img src="https://images.unsplash.com/photo-1632345031435-8797b2d58045?q=80&w=600" alt="Gel Nails">
+                <h3>Pastel Gel Polish</h3>
+            </div>
+            <div class="gallery-item" data-category="minimalist">
+                <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=600" alt="Minimalist Nails">
+                <h3>Minimal Matte Lines</h3>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="gallery.html" class="cta-btn secondary-cta">View All Designs <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+        </div>
+    </section>
+    <section id="booking" class="booking-section">
+        <div class="booking-container">
+            <div class="booking-info">
+                <h2>Schedule Your Visit</h2>
+                <p>Pick a service and dynamic slot. Our system routing directly routes details to Kanvi's WhatsApp for instant booking confirmation.</p>
+            </div>
+            <form id="whatsappBookingForm" class="booking-form">
+                <div class="form-group">
+                    <label for="clientName">Full Name</label>
+                    <input type="text" id="clientName" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">WhatsApp Mobile</label>
+                    <input type="tel" id="clientPhone" placeholder="10-digit number" required>
+                </div>
+                <div class="form-group">
+                    <label for="selectedService">Select Treatment</label>
+                    <select id="selectedService" required>
+                        <option value="" disabled selected>Choose a service...</option>
+                        <option value="Gel Extensions">Gel Extensions (₹1499)</option>
+                        <option value="Bridal Nail Art">Bridal Nail Art (₹2499)</option>
+                        <option value="Acrylic Overlay">Acrylic Overlay (₹1199)</option>
+                    </select>
+                </div>
+                <div class="date-time-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Preferred Date</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingTime">Preferred Time</label>
+                        <input type="time" id="bookingTime" >
+                    </div>
+                </div>
+                <button type="submit" class="submit-booking-btn">Confirm via WhatsApp <i class="fab fa-whatsapp"></i></button>
+            </form>
+        </div>
+    </section>
+
+   <!-- 6. MULTI-CARD REVIEW SLIDER SECTION -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-title">
+            <h2>Client Love</h2>
+            <p>What our gorgeous clients say about us</p>
+        </div>
+        
+        <!-- Track container for horizontal scrolling -->
+        <div class="testimonial-slider-container">
+            <div class="testimonial-slider-track">
+                
+                <!-- Card 1 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The precision in nail shaping and custom extension art by Kanvi is unmatched. My extensions lasted for 5 solid weeks!"</p>
+                    <h4>- Tanvi Kapoor</h4>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Best nail salon in town! Kanvi did an amazing job with my bridal acrylic extensions. Unka art sach me bhot clean hai."</p>
+                    <h4>- Riya Sharma</h4>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Mujhe minimal gel nails karwane the, aur jaisa mujhe chahiye tha exact waisa mila. Atmosphere bhi bhot cozy aur premium hai."</p>
+                    <h4>- Isha Patel</h4>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Super professional nail studio. Inke stone work aur pastel designs ekdum top notch hote hain. Must visit!"</p>
+                    <h4>- Megha Shah</h4>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="insta-reels-section">
+        <div class="section-title">
+            <h2>Join on Instagram</h2>
+            <p>Check out our latest transformations, reels & updates <a href="https://www.instagram.com/prettynailsby_kanvii?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" style="color:var(--cursive-color); font-weight:600;">@prettynailsby_kanvii</a></p>
+        </div>
+    </section>
+
+    <footer id="contact" class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="logo.jpg" alt="Footer Logo" class="footer-logo">
+                <p>Bringing premium nail transformation, design aesthetics and professional care to your hands.</p>
+            </div>
+            <div class="footer-links-list">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-hours">
+                <h3>Studio Hours</h3>
+                <p>🗓 Mon - Sun: 11:00 AM - 8:00 PM</p>
+            </div>
+           <div class="footer-contact">
+                <h3>Find Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i>-------</p>
+                <p><i class="fas fa-phone-alt"></i> +91 97243 26378</p>
+                <p>
+                    <i class="fab fa-instagram" style="color: #FFDC80; margin-right: 5px;"></i> 
+                    <a href="https://www.instagram.com/prettynailsby_kanvii?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" style="opacity: 1; text-decoration: underline; color: #FFFFFF;">@prettynailsby_kanvii</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Pretty Nails Studio by Kanvi with Love.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919724326378" class="whatsapp-premium-pill" id="waPill" target="_blank" rel="noopener">
+        <div class="pulse-ring"></div>
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat With Kanvi</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>

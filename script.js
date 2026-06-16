@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- 1. MOBILE NAVBAR SCROLL LOCK (TOUCH-BLOCK SYSTEM) ---
+    // --- SANITY CLOUD CONFIGURATION ---
+    const projectId = "n6g7lnsp";
+    const dataset = "production";
+
+    // --- 1. MOBILE NAVBAR SCROLL LOCK ---
     const mobileMenuBtn = document.getElementById('mobileMenu');
     const navLinksContainer = document.getElementById('navLinks');
 
@@ -32,98 +36,184 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 2. DYNAMIC GALLERY FILTER LOGIC WITH PREMIUM LIGHTBOX OVERLAY (CMS DRIVEN) ---
+    // --- 2. DYNAMIC GALLERY WITH SANITY CLOUD ---
     const filterButtons = document.querySelectorAll('.filter-btn');
     const fullGalleryGrid = document.getElementById('fullGalleryGrid');
+    const homeGalleryGrid = document.getElementById('homeGalleryGrid');
 
-    if (fullGalleryGrid) {
-        // Pop-up Lightbox Structure Automatic Creation
-        const lightbox = document.createElement('div');
-        lightbox.id = 'galleryLightbox';
-        Object.assign(lightbox.style, {
-            position: 'fixed', zIndex: '5000', left: '0', top: '0', width: '100%', height: '100vh',
-            backgroundColor: 'rgba(42, 28, 18, 0.95)', display: 'none', justifyContent: 'center',
-            alignItems: 'center', flexDirection: 'column', padding: '20px', backdropFilter: 'blur(5px)'
-        });
-        document.body.appendChild(lightbox);
+    // Setup Lightbox dynamically if needed
+    const lightbox = document.createElement('div');
+    lightbox.id = 'galleryLightbox';
+    Object.assign(lightbox.style, {
+        position: 'fixed', zIndex: '5000', left: '0', top: '0', width: '100%', height: '100vh',
+        backgroundColor: 'rgba(42, 28, 18, 0.95)', display: 'none', justifyContent: 'center',
+        alignItems: 'center', flexDirection: 'column', padding: '20px', backdropFilter: 'blur(5px)'
+    });
+    document.body.appendChild(lightbox);
 
-        // Global store for dynamic designs
-        let uploadedDesigns = [];
+    async function loadCMSGallery() {
+        // Sanity Cloud CDN Query Link
+        const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
+        const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;
 
-        // CMS JSON folder se saare data dynamic fetch karne ka rule
-        async function loadCMSGallery() {
-            try {
-                // --- DEFAULT CMS BACKUP ARRAY (Aapki config.yml settings ke exact items mapping) ---
-                uploadedDesigns = [
-                    { title: 'Classic Bridal Elegance', image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600', category: 'bridal' },
-                    { title: 'Pastel Gel Polish', image: 'https://images.unsplash.com/photo-1632345031435-8797b2d58045?q=80&w=600', category: 'gel' },
-                    { title: 'Minimal Matte Lines', image: 'https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=600', category: 'minimalist' },
-                    { title: 'Ombre Acrylic Extensions', image: 'https://images.unsplash.com/photo-1607779097040-26e80aa78e66?q=80&w=600', category: 'acrylic' },
-                    { title: 'Luxury Stones Bridal Red', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600', category: 'bridal' }
-                ];
+        try {
+            const response = await fetch(url);
+            const result = await response.json();
+            const uploadedDesigns = result.result || [];
 
-                renderGallery('all');
-            } catch (error) {
-                console.error("Error loading portfolio files:", error);
-            }
-        }
+            // Init Gallery for both pages from Cloud
+            if (homeGalleryGrid) renderGalleryItems(homeGalleryGrid, uploadedDesigns, 'all', 3);
+            if (fullGalleryGrid) renderGalleryItems(fullGalleryGrid, uploadedDesigns, 'all');
 
-        function renderGallery(filter = 'all') {
-            fullGalleryGrid.innerHTML = '';
-            uploadedDesigns.forEach(item => {
-                if (filter === 'all' || item.category === filter) {
-                    const card = document.createElement('div');
-                    card.className = 'gallery-item';
-                    card.style.cursor = 'pointer';
-                    card.innerHTML = `
-                        <img src="${item.image}" alt="${item.title}">
-                        <h3>${item.title}</h3>
-                    `;
-                    
-                    // Click lagte hi premium Lightbox container overlay toggle logic
-                    card.addEventListener('click', () => {
-                        const studioNumber = "919724326378"; // Kanvi ka Mobile Number
-                        const textMessage = `Hello Kanvi! 💅✨%0A%0AI just saw your gorgeous work in the gallery and want to book an appointment for this exact design:%0A%0A*Design Name:* ${item.title}%0A*Reference Image:* ${window.location.origin}${item.image}`;
-
-                        lightbox.innerHTML = `
-                            <span id="closeLightbox" style="position: absolute; top: 20px; right: 25px; color: #EFECE6; font-size: 2.5rem; cursor: pointer;">&times;</span>
-                            <img src="${item.image}" style="max-width: 90%; max-height: 70vh; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 20px;">
-                            <h3 style="color: #EFECE6; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; text-align: center;">${item.title}</h3>
-                            <a href="https://api.whatsapp.com/send?phone=${studioNumber}&text=${textMessage}" 
-                               target="_blank" 
-                               style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 30px; border-radius: 30px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 5px 20px rgba(37,211,102,0.3); transition: 0.2s;">
-                               <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Book This Design
-                            </a>
-                        `;
-                        lightbox.style.display = 'flex';
-                        document.body.classList.add('no-scroll');
-                    });
-
-                    fullGalleryGrid.appendChild(card);
-                }
+            // Tabs update event handlers configuration
+            filterButtons.forEach(button => {
+                button.replaceWith(button.cloneNode(true)); 
             });
-        }
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target.id === 'galleryLightbox' || e.target.id === 'closeLightbox') {
-                lightbox.style.display = 'none';
-                document.body.classList.remove('no-scroll');
-            }
-        });
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                renderGallery(e.target.getAttribute('data-category'));
+            const newFilterButtons = document.querySelectorAll('.filter-btn');
+            newFilterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    newFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderGalleryItems(fullGalleryGrid, uploadedDesigns, e.target.getAttribute('data-category'));
+                });
             });
-        });
 
-        // CMS Trigger Call Initialization
-        loadCMSGallery();
+        } catch (error) {
+            console.error("Error loading photos from Sanity Cloud:", error);
+        }
     }
 
-    // --- 3. WHATSAPP ROUTING FORM LOGIC ---
+    function renderGalleryItems(targetGrid, itemsList, filter = 'all', limit = null) {
+        if (!targetGrid) return;
+        targetGrid.innerHTML = '';
+        
+        let count = 0;
+        itemsList.forEach(item => {
+            if (filter === 'all' || item.category === filter) {
+                if (limit && count >= limit) return;
+                
+                const card = document.createElement('div');
+                card.className = 'gallery-item';
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <h3>${item.title}</h3>
+                `;
+                
+                card.addEventListener('click', () => {
+                    const studioNumber = "919724326378";
+                    const textMessage = `Hello Kanvi! 💅✨%0A%0AI just saw your gorgeous work in the gallery and want to book an appointment for this design:%0A%0A*Design Name:* ${item.title}`;
+
+                    lightbox.innerHTML = `
+                        <span id="closeLightbox" style="position: absolute; top: 20px; right: 25px; color: #EFECE6; font-size: 2.5rem; cursor: pointer;">&times;</span>
+                        <img src="${item.image}" style="max-width: 90%; max-height: 70vh; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 20px;">
+                        <h3 style="color: #EFECE6; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; text-align: center;">${item.title}</h3>
+                        <a href="https://api.whatsapp.com/send?phone=${studioNumber}&text=${textMessage}" target="_blank" style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 30px; border-radius: 30px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 5px 20px rgba(37,211,102,0.3);">
+                            <i class="fab fa-whatsapp"></i> Book This Design
+                        </a>
+                    `;
+                    lightbox.style.display = 'flex';
+                    document.body.classList.add('no-scroll');
+                });
+
+                targetGrid.appendChild(card);
+                count++;
+            }
+        });
+    }
+
+    // Initialize Gallery Setup Call
+    loadCMSGallery();
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target.id === 'galleryLightbox' || e.target.id === 'closeLightbox') {
+            lightbox.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    });
+
+    // --- 3. DYNAMIC MINIMALIST MENU LIST LOGIC & BOOKING DROP-DOWN SYNC ---
+    const servicesContainer = document.getElementById('servicesContainer');
+    const selectedServiceDropdown = document.getElementById('selectedService');
+
+    if (servicesContainer) {
+        // Fallback backup arrays jab tak CMS me data add na ho
+        const defaultMenu = [
+            { category: 'Nail Services', item_name: 'Gel Extensions', price: '₹1,499', time: '60 Mins' },
+            { category: 'Nail Services', item_name: 'Bridal Nail Art', price: '₹2,499', time: '90 Mins' },
+            { category: 'Nail Services', item_name: 'Acrylic Overlay', price: '₹1,199', time: '45 Mins' }
+        ];
+
+        async function loadCMSMenuData() {
+            const query = encodeURIComponent(`*[_type == "menu"]{category, item_name, price, time}`);
+            const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;
+
+            try {
+                const response = await fetch(url);
+                const result = await response.json();
+                const menuItems = result.result || [];
+                
+                if (menuItems.length === 0) {
+                    renderMenuAndDropdown(defaultMenu);
+                } else {
+                    renderMenuAndDropdown(menuItems);
+                }
+            } catch (error) {
+                console.error("Error loading live menu configuration from Sanity:", error);
+                renderMenuAndDropdown(defaultMenu); // Safe Fallback execution
+            }
+        }
+
+        function renderMenuAndDropdown(menuItems) {
+            servicesContainer.innerHTML = '';
+            
+            if (selectedServiceDropdown) {
+                selectedServiceDropdown.innerHTML = '<option value="" disabled selected>Choose a service...</option>';
+            }
+
+            const groups = menuItems.reduce((acc, item) => {
+                if (!acc[item.category]) acc[item.category] = [];
+                acc[item.category].push(item);
+                return acc;
+            }, {});
+
+            for (const category in groups) {
+                const block = document.createElement('div');
+                block.className = 'menu-category-block';
+                let rowsHTML = `<h3 class="category-heading">${category}</h3>`;
+                
+                groups[category].forEach(item => {
+                    const timeTarget = item.time ? `<span class="item-time">(${item.time})</span>` : '';
+                    
+                    rowsHTML += `
+                        <div class="menu-list-row">
+                            <div class="item-info">
+                                <span class="item-title">${item.item_name}</span>
+                                ${timeTarget}
+                            </div>
+                            <span class="item-dots"></span>
+                            <span class="item-cost">${item.price}</span>
+                        </div>
+                    `;
+
+                    if (selectedServiceDropdown) {
+                        const option = document.createElement('option');
+                        option.value = item.item_name;
+                        option.textContent = `${item.item_name} (${item.price})`;
+                        selectedServiceDropdown.appendChild(option);
+                    }
+                });
+                
+                block.innerHTML = rowsHTML;
+                servicesContainer.appendChild(block);
+            }
+        }
+        
+        // Dynamic Boot initializer call
+        loadCMSMenuData();
+    }
+
+    // --- 4. WHATSAPP ROUTING FORM LOGIC ---
     const bookingForm = document.getElementById('whatsappBookingForm');
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
@@ -147,19 +237,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 4. BULLETPROOF AUTOMATIC TESTIMONIAL CAROUSEL SLIDER (FIXED BRACKETS) ---
+    // --- 5. TESTIMONIAL CAROUSEL SLIDER ---
     const sliderContainer = document.querySelector('.testimonial-slider-container');
-    
     if (sliderContainer) {
         let isHovered = false;
-
-        // User touch ya hover kare toh slider ko roko
         sliderContainer.addEventListener('mouseenter', () => isHovered = true);
         sliderContainer.addEventListener('mouseleave', () => isHovered = false);
         sliderContainer.addEventListener('touchstart', () => isHovered = true);
         sliderContainer.addEventListener('touchend', () => isHovered = false);
 
-        // Responsive card element size checker
         const getScrollStep = () => {
             const firstCard = sliderContainer.querySelector('.testimonial-card');
             return firstCard ? firstCard.clientWidth + 24 : 320; 
@@ -169,14 +255,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isHovered) {
                 const scrollStep = getScrollStep();
                 const maxScroll = sliderContainer.scrollWidth - sliderContainer.clientWidth;
-                
-                // End par aane par smooth zero par, nahi toh aage slide karo
                 if (sliderContainer.scrollLeft >= maxScroll - 15) {
                     sliderContainer.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
                     sliderContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
                 }
             }
-        }, 3000); // Har 3 second me ekdum beautifully auto-slide hoga
+        }, 3000);
     }
 });

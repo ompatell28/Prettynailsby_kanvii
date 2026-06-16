@@ -219,14 +219,8 @@ img {
 }
 
 /* ==========================================================================
-   4. LAYOUT SYSTEM & COMPONENTS (Services, Gallery Grid)
+   4. SECTION TITLE COMPONENT (Global Headers)
    ========================================================================== */
-.services-section, .portfolio-section, .booking-section, .testimonials-section {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: clamp(40px, 8vw, 80px) 24px;
-}
-
 .section-title {
     text-align: center;
     margin-bottom: clamp(30px, 6vw, 50px);
@@ -244,52 +238,85 @@ img {
     color: #66554A;
 }
 
-/* SERVICES */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-}
-
-.service-card {
+/* ==========================================================================
+   5. MINIMALIST MENU LIST SECTION (Replaced Old Cards System)
+   ========================================================================== */
+.services-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 80px) 24px;
     background-color: var(--white);
-    padding: 35px 25px;
-    border-radius: 16px;
-    text-align: center;
-    border: 1px solid rgba(90, 62, 43, 0.05);
-    transition: var(--transition);
+    border-radius: 20px;
 }
 
-.service-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(90, 62, 43, 0.08);
+.menu-list-wrapper {
+    max-width: 650px;
+    margin: 40px auto 0 auto;
+    text-align: left;
 }
 
-.card-icon {
-    font-size: 2rem;
-    color: var(--cursive-color);
+.menu-category-block {
+    margin-bottom: 35px;
+}
+
+.category-heading {
+    font-family: var(--font-heading);
+    color: var(--cursive-color); /* Premium studio theme color match */
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.menu-list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     margin-bottom: 15px;
 }
 
-.service-card h3 {
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    margin-bottom: 12px;
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.service-card .price {
-    font-size: 1.5rem;
+.item-title {
+    font-size: 16px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.item-time {
+    font-size: 13px;
+    color: #888888;
+    font-style: italic;
+}
+
+.item-dots {
+    flex-grow: 1;
+    border-bottom: 1px dotted rgba(90, 62, 43, 0.25);
+    margin: 0 10px;
+    position: relative;
+    top: -4px;
+}
+
+.item-cost {
+    font-size: 16px;
+    color: var(--primary-color); /* Matches deep warm coffee brand color */
     font-weight: 600;
-    display: block;
-    margin-bottom: 8px;
 }
 
-.service-card .duration {
-    font-size: 0.85rem;
-    color: #77665B;
+/* ==========================================================================
+   6. PORTFOLIO / GALLERY FILTER TABS
+   ========================================================================== */
+.portfolio-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 80px) 24px;
 }
 
-/* FILTER TABS & PORTFOLIO */
 .filter-tabs {
     display: flex;
     justify-content: center;
@@ -348,8 +375,14 @@ img {
 }
 
 /* ==========================================================================
-   5. TESTIMONIALS HORIZONTAL CAROUSEL SLIDER
+   7. TESTIMONIALS HORIZONTAL CAROUSEL SLIDER
    ========================================================================== */
+.testimonials-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 80px) 24px;
+}
+
 .testimonial-slider-container {
     width: 100%;
     overflow-x: auto;
@@ -358,7 +391,6 @@ img {
     -webkit-overflow-scrolling: touch;
 }
 
-/* Custom Scrollbar for Desktop/Laptop views */
 .testimonial-slider-container::-webkit-scrollbar {
     height: 6px;
 }
@@ -419,8 +451,14 @@ img {
 }
 
 /* ==========================================================================
-   6. BOOKING FORM SYSTEM
+   8. BOOKING FORM SYSTEM
    ========================================================================== */
+.booking-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 80px) 24px;
+}
+
 .booking-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -509,7 +547,7 @@ img {
 }
 
 /* ==========================================================================
-   7. FOOTER SYSTEM
+   9. FOOTER SYSTEM
    ========================================================================== */
 .site-footer {
     background-color: var(--primary-color);
@@ -559,146 +597,7 @@ img {
 }
 
 /* ==========================================================================
-   8. FLOATING PREMIUM WHATSAPP PILL (With Pulse Effect)
-   ========================================================================== */
-.whatsapp-premium-pill {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: #25D366;
-    color: var(--white);
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
-    z-index: 9999;
-    transition: var(--transition);
-}
-
-.whatsapp-premium-pill i { font-size: 1.4rem; }
-.whatsapp-premium-pill:hover { transform: translateY(-4px) scale(1.02); }
-
-.pulse-ring {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #25D366;
-    border-radius: 50px;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    animation: wapulse 2s infinite;
-}
-
-@keyframes wapulse {
-    0% { transform: scale(0.95); opacity: 0.5; }
-    100% { transform: scale(1.15); opacity: 0; }
-}
-
-/* ==========================================================================
-   9. FIXED MEDIA BREAKPOINTS (Pure Overlay & No Shifting Fix)
-   ========================================================================== */
-@media (max-width: 768px) {
-    /* Hamburger icon ko menu ke upar dikhane ke liye stack level clear */
-    .menu-toggle { 
-        display: flex; 
-        z-index: 3000; /* Isko sabse upar rakhenge */
-    }
-
-    /* Hamburger bars dynamic animation transform configuration */
-    .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-    .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-    .desktop-only-btn { display: none; }
-    .mobile-only-action { display: block; width: 100%; text-align: center; }
-
-    /* FIXED MOBILE PANEL: Isko layout se azaad kiya taaki page na pichke */
-    .nav-links {
-        position: fixed !important;
-        top: 0;
-        right: -100%; /* Default me screen ke bahar chupa rahega */
-        height: 100vh;
-        width: 75vw; /* Phone screen ka 75% hissa cover karega */
-        max-width: 300px; /* Bade tablets par 300px se zyada bada nahi hoga */
-        background-color: #F8F6F2 !important; /* Premium Solid Matte Cream Layer */
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
-        padding: 40px;
-        gap: 35px;
-        box-shadow: -10px 0 40px rgba(90, 62, 43, 0.15);
-        transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-        z-index: 2800; /* Main page ke upar overlay ban kar aayega */
-    }
-
-    /* Jab active class lagegi toh menu smoothly screen par slide hoga */
-    .nav-links.active { 
-        right: 0 !important; 
-    }
-
-    /* Dropdown menu ke andar ka Book Appointment Button alignment fix */
-    .nav-links .mobile-only-action a.nav-btn {
-        display: inline-block !important;
-        color: var(--white) !important;
-        background-color: var(--primary-color) !important;
-        padding: 14px 30px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    /* Main website contents structure restrictions */
-    .hero { 
-        text-align: center; 
-        justify-content: center; 
-        min-height: 65vh; 
-        border-radius: 0; 
-    }
-    .hero-cta-group { justify-content: center; }
-    .booking-container { grid-template-columns: 1fr; gap: 30px; }
-
-    /* TESTIMONIAL SLIDER HORIZONTAL CONTROL SYSTEM */
-    .testimonial-slider-container {
-        display: block;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    .testimonial-slider-track { 
-        display: flex !important; 
-        flex-direction: row !important; 
-        gap: 15px; 
-        padding-bottom: 15px; 
-    }
-    .testimonial-card { 
-        width: 80vw; 
-        max-width: 280px; 
-        scroll-snap-align: center; 
-        flex-shrink: 0; 
-        padding: 25px 20px; 
-    }
-
-    /* Floating WhatsApp Pill settings for mobile scaling */
-    .whatsapp-premium-pill span { display: none; }
-    .whatsapp-premium-pill { padding: 16px; border-radius: 50%; bottom: 20px; right: 20px; }
-    .pulse-ring { border-radius: 50%; }
-}
-
-@media (max-width: 480px) { 
-    .date-time-row { grid-template-columns: 1fr; } 
-}
-/* ==========================================================================
-   11. INSTAGRAM REELS INTERACTIVE OVERLAY FEED
+   10. INSTAGRAM REELS INTERACTIVE OVERLAY FEED
    ========================================================================== */
 .insta-reels-section {
     max-width: var(--max-width);
@@ -717,7 +616,7 @@ img {
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    aspect-ratio: 9 / 16; /* Perfect Mobile Reel Ratio */
+    aspect-ratio: 9 / 16;
     box-shadow: 0 8px 25px rgba(0,0,0,0.05);
     background-color: #000;
 }
@@ -736,7 +635,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(218, 39, 67, 0.6), rgba(0,0,0,0.1));
+    background: linear-gradient(to top, rgba(168, 50, 50, 0.6), rgba(0,0,0,0.1)); /* Match cursive color */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -767,7 +666,134 @@ img {
     transform: scale(1);
 }
 
-/* Auto-slider smooth transition adjustment */
-.testimonial-slider-container {
-    scroll-behavior: smooth;
+/* ==========================================================================
+   11. FLOATING PREMIUM WHATSAPP PILL (With Pulse Effect)
+   ========================================================================== */
+.whatsapp-premium-pill {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #25D366;
+    color: var(--white);
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: var(--transition);
+}
+
+.whatsapp-premium-pill i { font-size: 1.4rem; }
+.whatsapp-premium-pill:hover { transform: translateY(-4px) scale(1.02); }
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #25D366;
+    border-radius: 50px;
+    left: 0;
+    top: 0;
+    z-1: -1;
+    animation: wapulse 2s infinite;
+}
+
+@keyframes wapulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* ==========================================================================
+   12. FIXED MEDIA BREAKPOINTS (Pure Overlay & No Shifting Fix)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .menu-toggle { 
+        display: flex; 
+        z-index: 3000;
+    }
+
+    .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .desktop-only-btn { display: none; }
+    .mobile-only-action { display: block; width: 100%; text-align: center; }
+
+    .nav-links {
+        position: fixed !important;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75vw;
+        max-width: 300px;
+        background-color: #F8F6F2 !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 40px;
+        gap: 35px;
+        box-shadow: -10px 0 40px rgba(90, 62, 43, 0.15);
+        transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        z-index: 2800;
+    }
+
+    .nav-links.active { 
+        right: 0 !important; 
+    }
+
+    .nav-links .mobile-only-action a.nav-btn {
+        display: inline-block !important;
+        color: var(--white) !important;
+        background-color: var(--primary-color) !important;
+        padding: 14px 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .hero { 
+        text-align: center; 
+        justify-content: center; 
+        min-height: 65vh; 
+        border-radius: 0; 
+    }
+    .hero-cta-group { justify-content: center; }
+    .booking-container { grid-template-columns: 1fr; gap: 30px; }
+
+    .testimonial-slider-container {
+        display: block;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .testimonial-slider-track { 
+        display: flex !important; 
+        flex-direction: row !important; 
+        gap: 15px; 
+        padding-bottom: 15px; 
+    }
+    .testimonial-card { 
+        width: 80vw; 
+        max-width: 280px; 
+        scroll-snap-align: center; 
+        flex-shrink: 0; 
+        padding: 25px 20px; 
+    }
+
+    .whatsapp-premium-pill span { display: none; }
+    .whatsapp-premium-pill { padding: 16px; border-radius: 50%; bottom: 20px; right: 20px; }
+    .pulse-ring { border-radius: 50%; }
+}
+
+@media (max-width: 480px) { 
+    .date-time-row { grid-template-columns: 1fr; } 
 }

@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullGalleryGrid = document.getElementById('fullGalleryGrid');
     const homeGalleryGrid = document.getElementById('homeGalleryGrid');
 
-    // Setup Lightbox dynamically if needed
     const lightbox = document.createElement('div');
     lightbox.id = 'galleryLightbox';
     Object.assign(lightbox.style, {
@@ -52,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(lightbox);
 
     async function loadCMSGallery() {
-        // Sanity Cloud CDN Query Link
         const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
         const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;
 
@@ -61,11 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             const uploadedDesigns = result.result || [];
 
-            // Init Gallery for both pages from Cloud
             if (homeGalleryGrid) renderGalleryItems(homeGalleryGrid, uploadedDesigns, 'all', 3);
             if (fullGalleryGrid) renderGalleryItems(fullGalleryGrid, uploadedDesigns, 'all');
 
-            // Tabs update event handlers configuration
             filterButtons.forEach(button => {
                 button.replaceWith(button.cloneNode(true)); 
             });
@@ -122,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Initialize Gallery Setup Call
     loadCMSGallery();
 
     lightbox.addEventListener('click', (e) => {
@@ -132,12 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- 3. DYNAMIC MINIMALIST MENU LIST LOGIC & BOOKING DROP-DOWN SYNC ---
+    // --- 3. DYNAMIC MENU LIST & BOOKING DROP-DOWN VIA SANITY ---
     const servicesContainer = document.getElementById('servicesContainer');
     const selectedServiceDropdown = document.getElementById('selectedService');
 
     if (servicesContainer) {
-        // Fallback backup arrays jab tak CMS me data add na ho
         const defaultMenu = [
             { category: 'Nail Services', item_name: 'Gel Extensions', price: '₹1,499', time: '60 Mins' },
             { category: 'Nail Services', item_name: 'Bridal Nail Art', price: '₹2,499', time: '90 Mins' },
@@ -159,14 +153,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     renderMenuAndDropdown(menuItems);
                 }
             } catch (error) {
-                console.error("Error loading live menu configuration from Sanity:", error);
-                renderMenuAndDropdown(defaultMenu); // Safe Fallback execution
+                console.error("Error loading menu from Sanity Cloud:", error);
+                renderMenuAndDropdown(defaultMenu);
             }
         }
 
         function renderMenuAndDropdown(menuItems) {
             servicesContainer.innerHTML = '';
-            
             if (selectedServiceDropdown) {
                 selectedServiceDropdown.innerHTML = '<option value="" disabled selected>Choose a service...</option>';
             }
@@ -184,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 groups[category].forEach(item => {
                     const timeTarget = item.time ? `<span class="item-time">(${item.time})</span>` : '';
-                    
                     rowsHTML += `
                         <div class="menu-list-row">
                             <div class="item-info">
@@ -203,13 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         selectedServiceDropdown.appendChild(option);
                     }
                 });
-                
                 block.innerHTML = rowsHTML;
                 servicesContainer.appendChild(block);
             }
         }
-        
-        // Dynamic Boot initializer call
         loadCMSMenuData();
     }
 

@@ -2,10 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- SANITY CLOUD CONFIGURATION ---
     const sanityConfig = {
-        projectId: 'ym8zucubkuifsz43u1rc7iqi', // Aapka naya bilkul sahi Project ID
+        projectId: 'ym8zucubkuifsz43u1rc7iqi', 
         dataset: 'production',
-        useCdn: true,
-        apiVersion: '2023-05-03'
+        useCdn: false, // Isko false kiya taaki token ke sath bilkul naya data turant mile
+        apiVersion: '2023-05-03', // 👈 Yahan comma lag gaya hai
+        token: 'skFuvrxApZdpNnicuSx8xHR8jXSuV4kxbtbBTmWIUe59mkXCCyeAcVRdq4nxevTlm02mubeWRaOlgYggkQlMFU2vp9t2UCC7Lk1Z125EaXmczHGNLuIgIoe10ro45stnEQrj5oFP3ApL3yrm1eP7JVGx9xnJ5IuEvoDl2xbmSigIlqEpe6Pf' // 👈 Quotes ke andar ekdum sahi token
     };
 
     // --- 1. MOBILE NAVBAR SCROLL LOCK ---
@@ -59,7 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
         try {
-            const response = await fetch(url);
+            // Token authorized fetch
+            const response = await fetch(url, {
+                headers: { Authorization: `Bearer ${sanityConfig.token}` }
+            });
             const result = await response.json();
             const uploadedDesigns = result.result || [];
 
@@ -147,7 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
             try {
-                const response = await fetch(url);
+                // Token authorized fetch
+                const response = await fetch(url, {
+                    headers: { Authorization: `Bearer ${sanityConfig.token}` }
+                });
                 const result = await response.json();
                 const menuItems = result.result || [];
                 

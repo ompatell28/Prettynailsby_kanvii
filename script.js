@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // --- SANITY CLOUD CONFIGURATION ---
-    const projectId = "n6g7lnsp";
-    const dataset = "production";
+    const sanityConfig = {
+        projectId: 'ym8zucubkuifsz43u1rc7iqi', // Aapka naya bilkul sahi Project ID
+        dataset: 'production',
+        useCdn: true,
+        apiVersion: '2023-05-03'
+    };
 
     // --- 1. MOBILE NAVBAR SCROLL LOCK ---
     const mobileMenuBtn = document.getElementById('mobileMenu');
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCMSGallery() {
         const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
-        const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;
+        const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
         try {
             const response = await fetch(url);
@@ -140,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         async function loadCMSMenuData() {
             const query = encodeURIComponent(`*[_type == "menu"]{category, item_name, price, time}`);
-            const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;
+            const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
             try {
                 const response = await fetch(url);

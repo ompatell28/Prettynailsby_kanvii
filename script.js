@@ -4,9 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sanityConfig = {
         projectId: 'ym8zucubkuifsz43u1rc7iqi', 
         dataset: 'production',
-        useCdn: false, // Isko false kiya taaki token ke sath bilkul naya data turant mile
-        apiVersion: '2023-05-03', // 👈 Yahan comma lag gaya hai
-        token: 'skFuvrxApZdpNnicuSx8xHR8jXSuV4kxbtbBTmWIUe59mkXCCyeAcVRdq4nxevTlm02mubeWRaOlgYggkQlMFU2vp9t2UCC7Lk1Z125EaXmczHGNLuIgIoe10ro45stnEQrj5oFP3ApL3yrm1eP7JVGx9xnJ5IuEvoDl2xbmSigIlqEpe6Pf' // 👈 Quotes ke andar ekdum sahi token
+        apiVersion: '2023-05-03',
+        token: 'skFuvrxApZdpNnicuSx8xHR8jXSuV4kxbtbBTmWIUe59mkXCCyeAcVRdq4nxevTlm02mubeWRaOlgYggkQlMFU2vp9t2UCC7Lk1Z125EaXmczHGNLuIgIoe10ro45stnEQrj5oFP3ApL3yrm1eP7JVGx9xnJ5IuEvoDl2xbmSigIlqEpe6Pf'
     };
 
     // --- 1. MOBILE NAVBAR SCROLL LOCK ---
@@ -57,13 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCMSGallery() {
         const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
-        const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
+        // Token ko direct URL ke andar pass kar diya, headers ka jhanjhat hi khatam!
+        const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}&token=${sanityConfig.token}`;
 
         try {
-            // Token authorized fetch
-            const response = await fetch(url, {
-                headers: { Authorization: `Bearer ${sanityConfig.token}` }
-            });
+            const response = await fetch(url);
             const result = await response.json();
             const uploadedDesigns = result.result || [];
 
@@ -148,13 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         async function loadCMSMenuData() {
             const query = encodeURIComponent(`*[_type == "menu"]{category, item_name, price, time}`);
-            const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
+            // Token ko direct URL ke andar pass kar diya
+            const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}&token=${sanityConfig.token}`;
 
             try {
-                // Token authorized fetch
-                const response = await fetch(url, {
-                    headers: { Authorization: `Bearer ${sanityConfig.token}` }
-                });
+                const response = await fetch(url);
                 const result = await response.json();
                 const menuItems = result.result || [];
                 

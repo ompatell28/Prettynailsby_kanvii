@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- SANITY CLOUD CONFIGURATION ---
     const sanityConfig = {
-        projectId: 'ym8zucubkuifsz43u1rc7iqi', 
+        projectId: '6lsaxf5e', // Aapki asli aur sahi Project ID
         dataset: 'production',
-        apiVersion: '2023-05-03',
-        token: 'skFuvrxApZdpNnicuSx8xHR8jXSuV4kxbtbBTmWIUe59mkXCCyeAcVRdq4nxevTlm02mubeWRaOlgYggkQlMFU2vp9t2UCC7Lk1Z125EaXmczHGNLuIgIoe10ro45stnEQrj5oFP3ApL3yrm1eP7JVGx9xnJ5IuEvoDl2xbmSigIlqEpe6Pf'
+        useCdn: false, // False taaki studio ka badlaav turant bina cache ke dikhe
+        apiVersion: '2023-05-03'
     };
 
     // --- 1. MOBILE NAVBAR SCROLL LOCK ---
@@ -56,8 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCMSGallery() {
         const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
-        // Token ko direct URL ke andar pass kar diya, headers ka jhanjhat hi khatam!
-        const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}&token=${sanityConfig.token}`;
+        const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
         try {
             const response = await fetch(url);
@@ -145,8 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         async function loadCMSMenuData() {
             const query = encodeURIComponent(`*[_type == "menu"]{category, item_name, price, time}`);
-            // Token ko direct URL ke andar pass kar diya
-            const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}&token=${sanityConfig.token}`;
+            const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
 
             try {
                 const response = await fetch(url);

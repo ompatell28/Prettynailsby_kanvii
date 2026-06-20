@@ -309,20 +309,33 @@ img {
 }
 
 /* ==========================================================================
-   6. PORTFOLIO / GALLERY FILTER TABS
+   6. PORTFOLIO / GALLERY FILTER TABS (FIXED ALIGNMENT & SHIFT EFFECT)
    ========================================================================== */
 .portfolio-section {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: clamp(40px, 8vw, 80px) 24px;
 }
-
-.filter-tabs {
+.gallery-filters {
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    flex-wrap: nowrap;        
+    justify-content: flex-start; /* Mobile par swipe scroll chalane ke liye */
+    gap: 10px;                
+    overflow-x: auto;         
+    padding: 10px 15px;
     margin-bottom: 35px;
-    flex-wrap: wrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Jab screen laptop ya desktop jitni badi ho */
+@media (min-width: 769px) {
+    .gallery-filters {
+        justify-content: center; /* Buttons ko desktop par center me rakhega */
+    }
+}
+
+.gallery-filters::-webkit-scrollbar {
+    display: none; /* Mobile scrollbar ko hide rakhega clean look ke liye */
 }
 
 .filter-btn {
@@ -331,13 +344,21 @@ img {
     padding: 8px 20px;
     border-radius: 20px;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 14px;        
+    white-space: nowrap;      
     cursor: pointer;
     transition: var(--transition);
     color: var(--primary-color);
 }
 
-.filter-btn.active, .filter-btn:hover {
+/* Active status specific overlay selector fix */
+.filter-btn.active {
+    background-color: var(--primary-color) !important;
+    color: var(--white) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.filter-btn:hover {
     background-color: var(--primary-color);
     color: var(--white);
     border-color: var(--primary-color);
@@ -698,7 +719,7 @@ img {
     border-radius: 50px;
     left: 0;
     top: 0;
-    z-1: -1;
+    z-index: -1;
     animation: wapulse 2s infinite;
 }
 

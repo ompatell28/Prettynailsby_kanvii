@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- SANITY CLOUD CONFIGURATION ---
     const sanityConfig = {
-        projectId: '6lsaxf5e', // Aapki asli aur sahi Project ID
+        projectId: '6lsaxf5e', 
         dataset: 'production',
-        useCdn: false, // False taaki studio ka badlaav turant bina cache ke dikhe
+        useCdn: false, 
         apiVersion: '2023-05-03'
     };
 
@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const fullGalleryGrid = document.getElementById('fullGalleryGrid');
     const homeGalleryGrid = document.getElementById('homeGalleryGrid');
+    let uploadedDesigns = []; // Dynamic data placeholder
 
     const lightbox = document.createElement('div');
     lightbox.id = 'galleryLightbox';
@@ -54,6 +55,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.body.appendChild(lightbox);
 
+    // CRITICAL FIX: Safe button events binding immediately (Fetch block hone par bhi click chalega)
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active'); 
+            
+            const selectedCat = this.getAttribute('data-category');
+            if (uploadedDesigns.length > 0 && fullGalleryGrid) {
+                renderGalleryItems(fullGalleryGrid, uploadedDesigns, selectedCat);
+            }
+        });
+    });
+
     async function loadCMSGallery() {
         const query = encodeURIComponent(`*[_type == "portfolio"]{title, "image": image.asset->url, category}`);
         const url = `https://${sanityConfig.projectId}.api.sanity.io/v2021-10-21/data/query/${sanityConfig.dataset}?query=${query}`;
@@ -61,22 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(url);
             const result = await response.json();
-            const uploadedDesigns = result.result || [];
+            uploadedDesigns = result.result || [];
 
             if (homeGalleryGrid) renderGalleryItems(homeGalleryGrid, uploadedDesigns, 'all', 3);
             if (fullGalleryGrid) renderGalleryItems(fullGalleryGrid, uploadedDesigns, 'all');
-
-            filterButtons.forEach(button => {
-                button.replaceWith(button.cloneNode(true)); 
-            });
-            const newFilterButtons = document.querySelectorAll('.filter-btn');
-            newFilterButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    newFilterButtons.forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                    renderGalleryItems(fullGalleryGrid, uploadedDesigns, e.target.getAttribute('data-category'));
-                });
-            });
 
         } catch (error) {
             console.error("Error loading photos from Sanity Cloud:", error);
